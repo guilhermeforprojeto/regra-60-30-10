@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regra 60-30-10</title>
+<style>
+  :root { --p: #EFE9DF; --s: #3A1E3F; --d: #FF6420; --ts: #EFE9DF; --td: #1B0E1D;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f4f4f2; color: #1d1d1f; }
+  main { width: min(1040px, 100% - 32px); margin: 0 auto; padding: 40px 0 56px; }
+  h1 { font-size: clamp(30px, 5vw, 52px); letter-spacing: -0.03em; margin: 0; }
+  .sub { color: #6b6b70; margin: 8px 0 28px; max-width: 62ch; line-height: 1.5; }
+  .controles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; align-items: center; }
+  .controles button { font: inherit; font-size: 14px; border: 1px solid #d0d0d4; background: #fff; padding: 8px 14px; border-radius: 999px; cursor: pointer; }
+  .controles button[aria-pressed=true] { background: #1d1d1f; color: #fff; border-color: #1d1d1f; }
+  .controles label { font-size: 14px; display: flex; gap: 8px; align-items: center; margin-left: auto; }
+  .grade { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: start; }
+  .tela { background: var(--p); border-radius: 28px; padding: 22px; min-height: 460px; display: grid; gap: 14px; box-shadow: 0 1px 0 #0001, 0 20px 40px -24px #0004; }
+  .topo { display: flex; justify-content: space-between; align-items: center; color: var(--s); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--s); }
+  .card { background: var(--s); color: var(--ts); border-radius: 20px; padding: 20px; display: grid; gap: 10px; }
+  .card .num { font-size: 44px; font-weight: 700; letter-spacing: -0.03em; }
+  .card .num b { color: var(--d); }
+  .barra { height: 8px; border-radius: 99px; background: color-mix(in srgb, var(--ts) 20%, transparent); overflow: hidden; }
+  .barra i { display: block; height: 100%; width: 68%; background: var(--d); border-radius: inherit; }
+  .lista { display: grid; gap: 8px; }
+  .item { display: flex; justify-content: space-between; padding: 12px 14px; border-radius: 14px; color: var(--s); background: color-mix(in srgb, var(--s) 7%, var(--p)); font-size: 15px; }
+  .item.ativo { outline: 2px solid var(--d); }
+  .acoes { display: flex; gap: 10px; }
+  .acoes button { flex: 1; font: inherit; font-weight: 600; border-radius: 14px; padding: 14px; border: 2px solid var(--s); background: transparent; color: var(--s); }
+  .acoes .primario { background: var(--d); border-color: var(--d); color: var(--td); }
+  body.errado .card { background: var(--d); color: var(--td); }
+  body.errado .item { background: var(--d); color: var(--td); }
+  body.errado .acoes button { background: var(--d); border-color: var(--d); color: var(--td); }
+  body.errado .card .num b { color: var(--td); }
+  .painel { display: grid; gap: 16px; }
+  .chip { display: grid; grid-template-columns: 1fr auto; align-items: end; border-radius: 18px; padding: 16px 18px; min-height: 76px; }
+  .chip strong { font-size: 20px; letter-spacing: -0.01em; }
+  .chip span { font-size: 26px; font-weight: 700; }
+  .chip small { grid-column: 1 / -1; font-family: ui-monospace, Menlo, monospace; font-size: 12px; opacity: .8; }
+  .medidor { display: flex; height: 22px; border-radius: 99px; overflow: hidden; }
+  .nota { font-size: 14px; color: #6b6b70; line-height: 1.5; }
+  @media (max-width: 760px) { .grade { grid-template-columns: 1fr; } .controles label { margin-left: 0; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Regra 60-30-10</h1>
+  <p class="sub">60% da área na cor principal, 30% na secundária e 10% no destaque. Troque a paleta e o destaque: a tela muda de cara mudando três variáveis. Marque "sem a regra" para ver o destaque espalhado.</p>
+
+  <div class="controles" role="group" aria-label="Paleta">
+    <button data-paleta="0" aria-pressed="true">Fala (berinjela)</button>
+    <button data-paleta="1" aria-pressed="false">Passo (musgo)</button>
+    <button data-paleta="2" aria-pressed="false">Onda (ganache)</button>
+    <label><input type="checkbox" data-errado> Sem a regra</label>
+  </div>
+
+  <div class="grade">
+    <div class="tela" aria-label="Tela de exemplo">
+      <div class="topo"><span data-app>fala</span><div class="avatar"></div></div>
+      <div class="card">
+        <div>Sequência de estudos</div>
+        <div class="num"><b>12</b> dias</div>
+        <div class="barra"><i></i></div>
+      </div>
+      <div class="lista">
+        <div class="item">Bom dia <span>Good morning</span></div>
+        <div class="item ativo">Boa noite <span>Good night</span></div>
+        <div class="item">Obrigado <span>Thank you</span></div>
+      </div>
+      <div class="acoes"><button>Pular</button><button class="primario">Verificar</button></div>
+    </div>
+
+    <div class="painel">
+      <div class="chip" data-chip="p"></div>
+      <div class="chip" data-chip="s"></div>
+      <div class="chip" data-chip="d"></div>
+      <div class="medidor" aria-hidden="true">
+        <div style="flex:60;background:var(--p)"></div><div style="flex:30;background:var(--s)"></div><div style="flex:10;background:var(--d)"></div>
+      </div>
+      <p class="nota">Cores aproximadas das paletas do vídeo de referência. O destaque aparece só no número, na barra de progresso, no item ativo e no botão principal.</p>
+    </div>
+  </div>
+</main>
+<script>
+  const paletas = [
+    { app: 'fala', p: ['Lona de algodão', '#EFE9DF'], s: ['Tinta berinjela', '#3A1E3F'], d: ['Laranja papaia', '#FF6420'], ts: '#EFE9DF', td: '#1B0E1D' },
+    { app: 'passo', p: ['Musgo negro', '#1F231F'], s: ['Aveia com leite', '#D8C6A6'], d: ['Fúcsia faísca', '#FF2D8F'], ts: '#1F231F', td: '#1F231F' },
+    { app: 'onda', p: ['Creme mármore', '#EEE6D8'], s: ['Marrom ganache', '#3B251D'], d: ['Verde kelly', '#1FC858'], ts: '#EEE6D8', td: '#10261A' },
+  ];
+  const root = document.documentElement;
+  const papeis = { p: ['Principal', 60], s: ['Secundária', 30], d: ['Destaque', 10] };
+  function aplicar(i) {
+    const pl = paletas[i];
+    root.style.setProperty('--p', pl.p[1]); root.style.setProperty('--s', pl.s[1]); root.style.setProperty('--d', pl.d[1]);
+    root.style.setProperty('--ts', pl.ts); root.style.setProperty('--td', pl.td);
+    document.querySelector('[data-app]').textContent = pl.app;
+    for (const k of ['p', 's', 'd']) {
+      const el = document.querySelector(`[data-chip=${k}]`);
+      el.style.background = pl[k][1];
+      el.style.color = k === 'p' ? pl.s[1] : (k === 's' ? pl.ts : pl.td);
+      el.innerHTML = `<strong>${pl[k][0]}</strong><span>${papeis[k][1]}%</span><small>${papeis[k][0]} · ${pl[k][1]}</small>`;
+    }
+    document.querySelectorAll('[data-paleta]').forEach(b => b.setAttribute('aria-pressed', b.dataset.paleta == i));
+  }
+  document.querySelectorAll('[data-paleta]').forEach(b => b.addEventListener('click', () => aplicar(+b.dataset.paleta)));
+  document.querySelector('[data-errado]').addEventListener('change', e => document.body.classList.toggle('errado', e.target.checked));
+  aplicar(0);
+</script>
+</body>
+</html>
